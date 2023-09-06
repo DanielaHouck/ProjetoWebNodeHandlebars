@@ -1,0 +1,145 @@
+        <nav class="navbar bg-primary navbar-expand-lg" data-bs-theme="dark">
+            <div class="container"> 
+                <a class="navbar-brand" href="/">SISTEMA WEB</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false"
+                        aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                    <div class="navbar-nav">
+                        <a class="nav-link active" aria-current="page" href="/">Cadastrar</a>
+                        <a class="nav-link" href="/consulta">Consultar</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    <div class="container text-center">
+        <div class="row mt-5">
+            <div class="col bg-white">
+                <p class="text-start fs-5">Cadastrar - Agendamento de Potenciais Clientes</p>
+                <p class="text-start fs-6">Sistema Utilizado para agendamento de serviços.</p>
+                <p>
+                    {{#each post}}
+                        {{#dataValues}}
+                            <form action="/atualizar" method="POST">
+
+                            <!--Nome -->
+                                <div class="mb-3 text-start">
+                                    <input type="hidden" name="id" class="form-control" id="nome" value="{{id}}">
+                                    <label for="validationServerName" class="form-label">Nome:</label>
+                                        <div class="input-group has-validation"> 
+                                            <input type="text" name="nome" placeholder="Digite um nome" class="form-control is-valid" id="validationServerName" aria-describedby="inputGroupPrepend3 validationServerUsernameFeedback" required value="{{nome}}"> 
+                                                <div class="valid-feedback">Certo</div>
+                                                <div id="validationServerUsernameFeedback" class="invalid-feedback">Preencha um nome.</div>
+                                        </div> 
+                                </div>
+
+                            <!--Telefone -->
+                                <div class="mb-3 text-start">
+                                    <label class="form-label">Celular:</label>
+                                    <div class="input-group has-validation">
+                                        <input type="text" name="telefone" class="form-control is-valid" id="validationServerTelefone" aria-describedby="inputGroupPrepend3 validationServerTelefoneFeedback" required placeholder="(00) 90000-0000" oninput="formatarTelefone()" maxlength="14" mask="(00) 00000-0000" value="{{telefone}}">
+                                            <div class="valid-feedback">Certo</div>
+                                            <div id="validationServerTelefoneFeedback" class="invalid-feedback">Preencha apenas os números do celular, Exemplo: 11987651000</div>
+                                    </div>
+                                </div>
+                            <!--Origem -->
+                                <div class="mb-3 text-start">
+                                    <label for="validationServerOrigem" class="form-label">Origem:</label>
+                                    <select name="origem" class="form-select is-valid" id="validationServerOrigem" aria-describedby="validationServerOrigemFeedback" required>
+                                        <option selected value="{{origem}}">{{origem}}</option>
+                                        <option value="celular">Celular</option>
+                                        <option value="whatsapp">Whatsapp</option>
+                                        <option value="telefone">Telefone Fixo</option>
+                                        <option value="facebook">Facebook</option>
+                                        <option value="intagram">Instagram</option>
+                                        <option value="google">Google Meu Negocio</option>
+                                    </select>
+                                </div>
+
+                             <!--Data do Contato -->
+                                <div class="mb-3 text-start">
+                                    <label for="validationServerContato" class="form-label">Data do Contato:</label>
+                                    <div class="input-group has-validation"> 
+                                        <input type="date" name="data_contato" class="form-control is-valid" id="validationServerContato" aria-describedby="inputGroupPrepend3 validationServerUsernameFeedback" value="{{data_contato}}" required>
+                                            <div class="valid-feedback">Certo</div>
+                                            <div id="validationServerContatoFeedback" class="invalid-feedback">Preencha uma data completa.</div>
+                                    </div>
+                                </div>
+
+                             <!--Observação -->
+                                <div class="mb-3 text-start">
+                                    <label for="validationServerObs" class="form-label">Observação:</label>
+                                    <div class="input-group has-validation">
+                                        <textarea name="observacao" placeholder="" style="height: 100px" class="form-control is-valid" id="validationServerObs" aria-describedby="inputGroupPrepend3 validationServerObsFeedback" required>{{observacao}}</textarea>
+                                            <div class="valid-feedback">Certo</div>
+                                            <div id="validationServerObsFeedback" class="invalid-feedback">Preencha uma observação</div>
+                                    </div>
+                                </div>
+
+                                 <!--Atualizar -->
+                                <div class="mb-3 text-start">
+                                    <button type="submit" class="btn btn-primary">Atualizar</button>
+                                </div>
+                            </form>
+                        {{/dataValues}}
+                    {{/each}}
+                </p>
+            </div>
+            <div class="col-1">
+                &nbsp;
+            </div>
+        </div>
+    </div>
+
+
+    
+    <!--JS -->
+        <script>
+            function validarCampo(inputId, feedbackId) {
+                const input = document.getElementById(inputId);
+                const feedback = document.getElementById(feedbackId);
+
+                input.addEventListener("input", function() {
+                    if (input.value.length === 0) {
+                        input.classList.add("is-invalid");
+                        input.classList.remove("is-valid");
+                    } else {
+                        input.classList.remove("is-invalid");
+                        input.classList.add("is-valid");
+                    }
+                });
+            }
+
+                validarCampo("validationServerName", "validationServerUsernameFeedback");
+                validarCampo("validationServerObs", "validationServerObsFeedback");
+                validarCampo("validationServerOrigem", "validationServerOrigemFeedback");
+                validarCampo("validationServerContato", "validationServerContatoFeedback");
+
+
+                // Validação telefone
+                 function formatarTelefone() {
+                    var telefoneInput = document.getElementById("validationServerTelefone");
+                    var telefone = telefoneInput.value.replace(/\D/g, ""); // remove todos os caracteres não numéricos
+                    var telefoneFormatado = telefone.replace(/(\d{2})(\d{5})(\d{4})/, "($1) $2-$3"); // aplica a máscara "(00) 90000-0000"
+                    telefoneInput.value = telefoneFormatado;
+                }
+
+                    function validarTelefone(inputId, feedbackId) {
+                        const input = document.getElementById(inputId);
+                        const feedback = document.getElementById(feedbackId);
+
+                        input.addEventListener("input", function() {
+                            if (input.value.length === 15) {
+                            input.classList.remove("is-invalid");
+                            input.classList.add("is-valid");
+                            } else {
+                            input.classList.add("is-invalid");
+                            input.classList.remove("is-valid");
+                            }
+                        });
+                        }
+
+                        validarTelefone("validationServerTelefone", "validationServerTelefoneFeedback");
+        </script>

@@ -1,0 +1,89 @@
+        <nav class="navbar bg-primary navbar-expand-lg" data-bs-theme="dark">
+            <div class="container"> 
+                <a class="navbar-brand" href="/">SISTEMA WEB</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false"
+                        aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                    <div class="navbar-nav">
+                        <a class="nav-link active" aria-current="page" href="/">Cadastrar</a>
+                        <a class="nav-link" href="/consulta">Consultar</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+    <div class="container text-center">
+        <div class="row mt-5">
+            <div class="col bg-white">
+                <p class="text-start fs-5">Consultar - Agendamento de Potenciais Clientes</p>
+                <p class="text-start fs-6">Sistema Utilizado para agendamento de serviços.</p>
+                <p>
+                <div class="container text-center shadow-lg mb-5 bg-body-tertiary rounded-3">
+                    <div class="row bg-info rounded-top-3 p-1">
+                        <div class="col text-light">
+                            Nome
+                        </div>
+                        <div class="col text-light">
+                            Telefone
+                        </div>
+                        <div class="col text-light">
+                            Origem
+                        </div>
+                        <div class="col text-light">
+                            Data de Contato
+                        </div>
+                        <div class="col text-light">
+                            Observação
+                        </div>
+                        <div class="col text-light">
+                            Ações
+                        </div>
+                    </div>
+                    {{#each post}}
+                        {{#dataValues}}
+                        <div class="row border-bottom border-info p-2 mb-2 mt-1 rounded-bottom-3">
+                            <div class="col">
+                                {{nome}}
+                            </div>
+                            <div class="col">
+                                {{telefone}}
+                            </div>
+                            <div class="col">
+                                {{origem}}
+                            </div>
+                            <div class="col">
+                                {{data_contato}}
+                            </div>
+                            <div class="col">
+                                {{observacao}}
+                            </div>
+                            <div class="col">
+                                <button type="button" class="btn btn-outline-primary btn-sm "><a href="/editar/{{id}}" style="color:inherit">Editar</a></button>
+                                <button type="button" class="btn btn-outline-danger btn-sm"><a style="color:inherit" onclick="confirmExclusao({{id}})">Excluir</a></button>
+                            </div>
+                            
+                        </div>
+                        {{/dataValues}}
+                    {{/each}}
+                </div>
+                </p>
+            </div>
+            <div class="col-1">
+                &nbsp;
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function confirmExclusao(id) {
+            var alerta = confirm("Você deseja excluir realmente esse registro?");
+            if (alerta) {
+                window.location.href = "/excluir/" + id;
+            } else{
+                window.location.href = "/consulta"
+            }
+        }
+    </script>
